@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DBHelper
 {
@@ -19,9 +20,8 @@ namespace DBHelper
         /// If successful returns True, otherwise it returns False.
         /// </summary>
         /// <param name="ConnectionString"></param>
-        /// <param name="ErrorMessage"></param>
         /// <returns></returns>
-        public bool Connect(string ConnectionString, string ErrorMessage) 
+        public bool Connect(string ConnectionString)
         {
             try
             {
@@ -36,9 +36,8 @@ namespace DBHelper
 
                 return true;
             }
-            catch (Exception ex)
-            {
-                ErrorMessage = ex.Message;
+            catch (Exception)
+            {             
                 return false;
             }
         }
@@ -47,9 +46,8 @@ namespace DBHelper
         /// Used to close the existing connection to the database.
         /// If successful returns True, otherwise it returns False.
         /// </summary>
-        /// <param name="ErrorMessage"></param>
         /// <returns></returns>
-        public bool Close(string ErrorMessage)
+        public bool Close()
         {
             try
             {
@@ -58,9 +56,8 @@ namespace DBHelper
                 ConnectionObj.Dispose();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ErrorMessage = ex.Message;
                 return false;
             }
         }
@@ -71,7 +68,7 @@ namespace DBHelper
         /// <param name="Query">SQL query or stored procedure</param>
         /// <param name="Values">Values (optional)</param>
         /// <returns></returns>
-        public DataTable Execute(string Statement, params object [] Parameters)
+        public DataTable Execute(string Statement, params object[] Parameters)
         {
             var CMD = new SqlCommand
             {
@@ -80,7 +77,7 @@ namespace DBHelper
                 CommandText = Statement
             };
 
-            if (CMD.CommandText .Contains(" "))
+            if (CMD.CommandText.Contains(" "))
             {
                 CMD.CommandType = CommandType.Text;
             }
@@ -110,7 +107,7 @@ namespace DBHelper
         /// <param name="Statement"></param>
         /// <param name="Parameters"></param>
         /// <returns></returns>
-        public DataTable Fill(string Statement, params object [] Parameters)
+        public DataTable Fill(string Statement, params object[] Parameters)
         {
             var CMD = new SqlCommand
             {

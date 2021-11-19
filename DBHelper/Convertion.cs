@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
+
 
 namespace DBHelper
 {
@@ -42,5 +44,37 @@ namespace DBHelper
             bw.Close();
             fs.Close();
         }
+
+        public byte[] ImageToByte(Bitmap Image)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                if (Image != null)
+                {
+                    var bmp = new Bitmap(Image);
+                    bmp.Save(ms, Image.RawFormat);
+                    return ms.ToArray();
+                }
+                else
+                {
+                    return new byte[] { };
+                }
+            }
+        }
+
+        //public Bitmap ByteToImage(byte[] ImageData)
+        //{
+        //    using (MemoryStream ms = new MemoryStream(ImageData))
+        //    {
+        //        if (ImageData != null)
+        //        {
+        //           //return ms.;
+        //        }
+        //        else
+        //        {
+        //            //return new byte[] { }; 
+        //        }
+        //    }
+        //}
     }
 }
