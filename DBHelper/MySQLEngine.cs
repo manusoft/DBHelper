@@ -22,7 +22,7 @@ namespace DBHelper
         /// <param name="ConnectionString"></param>
         /// <param name="ErrorMessage"></param>
         /// <returns></returns>
-        public bool Connect(string ConnectionString)
+        public bool Connect(ref string ConnectionString, ref string ErrorMessage)
         {
             try
             {
@@ -37,8 +37,9 @@ namespace DBHelper
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ErrorMessage = ex.Message;
                 return false;
             }
         }
@@ -47,8 +48,9 @@ namespace DBHelper
         /// Used to close the existing connection to the database.
         /// If successful returns True, otherwise it returns False.
         /// </summary>
+        /// <param name="ErrorMessage"></param>
         /// <returns></returns>
-        public bool Close()
+        public bool Close(ref string ErrorMessage)
         {
             try
             {
@@ -57,8 +59,9 @@ namespace DBHelper
                 ConnectionObj.Dispose();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ErrorMessage = ex.Message;
                 return false;
             }
         }
